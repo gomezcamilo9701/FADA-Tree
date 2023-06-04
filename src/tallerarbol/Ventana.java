@@ -279,8 +279,16 @@ public class Ventana extends javax.swing.JFrame {
             arbol.deleteNode(arbol.raiz, numero);
             tablero.repaint();
             lblMensaje.setText("borrado");
-
         }
+        
+        else if (arbol.nodoTieneHijos(nodoActual)) {
+            //Si tiene hijos, entra aquí y lo borra.
+            lblMensaje.setText("borrado CON hijos");
+            arbol.deleteNode(arbol.raiz, numero);
+            tablero.repaint();
+            
+        }
+        
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**

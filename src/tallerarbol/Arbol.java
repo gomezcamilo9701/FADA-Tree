@@ -41,7 +41,6 @@ public class Arbol {
             raiz.dibujarNodo(dibujo, 0, 0);
         }
     }
-    
 
     //Método que para el contiene, verificar si el numero está en el array.
     public boolean contiene(int numero) {
@@ -90,64 +89,99 @@ public class Arbol {
     public boolean nodoTieneHijos(Nodo nodo) {
         return nodo.verificarHijos(nodo);
     }
-
-    public Nodo deleteNode(Nodo raiz,int k) {
-
-        // Base case
-        if (raiz == null) {
-            return raiz;
+    
+    public Nodo getMinimumKey(Nodo curr)
+    {
+        while (curr.izq != null) {
+            curr = curr.izq;
         }
-
-        // Recursive calls for ancestors of
-        // node to be deleted
-        if (raiz.getInfo() > k) {
-            System.out.println("key:" + raiz.getInfo());
-            raiz.izq = deleteNode(raiz.izq, k);
-            return raiz;
-        } else if (raiz.getInfo() < k) {
-            raiz.der = deleteNode(raiz.der, k);
-            return raiz;
-        }
-
-        // We reach here when root is the node
-        // to be deleted.
-        // If one of the children is empty
-        if (raiz.izq == null) {
-            System.out.println("pasa aqui 2");
-            Nodo temp = raiz.der;
-            System.out.println("nodetemp");
-            return temp;
-        } else if (raiz.der == null) {
-            Nodo temp = raiz.izq;
-            return temp;
-        } // If both children exist
-        else {
-            Nodo succParent = raiz;
-
-            // Find successor
-            Nodo succ = raiz.der;
-
-            while (succ.izq != null) {
-                succParent = succ;
-                succ = succ.izq;
-            }
-
-            // Delete successor. Since successor
-            // is always left child of its parent
-            // we can safely make successor's right
-            // right child as left of its parent.
-            // If there is no succ, then assign
-            // succ->right to succParent->right
-            if (succParent != raiz) {
-                succParent.izq = succ.der;
-            } else {
-                succParent.der = succ.der;
-            }
-
-            // Copy Successor Data to root
-            raiz.setInfo(succ.getInfo());
-
-            return raiz;
-        }
+        return curr;
     }
+
+    public Nodo deleteNode(Nodo root, int key) {
+        // puntero para almacenar el padre del nodo actual
+        Nodo parent = null;
+
+        // comienza con el nodo raíz
+        Nodo curr = root;
+        System.out.println("1");
+
+        // busca la clave en el BST y establece su puntero principal
+        while (curr != null && curr.getInfo() != key) {
+            System.out.println("curr " + curr.getInfo() + " key " + key);
+            // actualiza el padre al nodo actual
+            System.out.println("2");
+            parent = curr;
+
+            // si la clave dada es menor que el nodo actual, vaya al subárbol izquierdo;
+            // de lo contrario, vaya al subárbol derecho
+            if (key < curr.getInfo()) {
+            System.out.println("2.1");                
+                curr = curr.izq;
+            } else {
+                System.out.println("2.2");
+                curr = curr.der;
+            }
+        }
+
+        // regresa si la clave no se encuentra en el árbol
+        if (curr == null) {
+            return root;
+        }
+
+        // Caso 1: el nodo a eliminar no tiene hijos, es decir, es un nodo hoja
+        if (curr.izq == null && curr.der == null) {
+            System.out.println("3");
+            // si el nodo a eliminar no es un nodo raíz, establezca su
+            // padre izquierdo/derecho hijo a nulo
+            if (curr != root) {
+                System.out.println("4");
+                if (parent.izq == curr) {
+                    System.out.println("5");
+                    parent.izq = null;
+                } else {
+                    System.out.println("6");
+                    parent.der = null;
+                }
+            } // si el árbol solo tiene un nodo raíz, configúrelo como nulo
+            else {
+                System.out.println("7");
+                root = null;
+            }
+        } // Caso 2: el nodo a eliminar tiene dos hijos
+        else if (curr.izq != null && curr.der != null) {
+            // encuentra su nodo sucesor en orden
+            Nodo successor = getMinimumKey(curr.der);
+
+            // almacenar el valor del sucesor
+            int val = successor.getInfo();
+
+            // borra recursivamentemente el sucesor. Nótese que el sucesor
+            // tendrá como máximo un hijo (hijo derecho)
+            deleteNode(root, successor.getInfo());
+
+            // copia el valor del sucesor al nodo actual
+            curr.setInfo(val);
+        } // Caso 3: el nodo a eliminar solo tiene un hijo
+        else {
+            // elige un nodo hijo
+            Nodo child = (curr.izq != null) ? curr.izq : curr.der;
+
+            // si el nodo a eliminar no es un nodo raíz, establezca su padre
+            // a su hijo
+            if (curr != root) {
+                if (curr == parent.izq) {
+                    parent.izq = child;
+                } else {
+                    parent.der = child;
+                }
+            } // si el nodo que se va a eliminar es un nodo raíz, establezca la raíz en el hijo
+            else {
+                root = child;
+            }
+        }
+
+        return root;
+    }
+
 }
