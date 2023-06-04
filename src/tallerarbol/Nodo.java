@@ -67,6 +67,22 @@ public class Nodo {
             }
         }
     }
+    
+    /**
+     * VERIFICAR SI TIENE HIJOS
+     * @return 
+     */
+    public boolean verificarHijos(Nodo nodo){
+        //Dado un nodo tenemos que verificar si tiene hijos
+        if (nodo.izq==null && nodo.der==null){
+            System.out.println("No tiene hijos");
+            return false;
+            
+        }
+        System.out.println("Tiene hijos");
+        return true;
+            
+    }
                
     public String EnOrden()
     {

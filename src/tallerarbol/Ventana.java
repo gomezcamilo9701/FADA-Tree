@@ -260,7 +260,22 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        String input = inputBorrar.getText();
+        int numero = Integer.parseInt(input);
+        Nodo nodoActual = arbol.encontrarNodo(numero);
+
+        // Verificamos primero si el numero está en el árbol, si no, pues no lo podemos borrar
+        if (!(arbol.contiene(numero))) {
+            lblMensaje.setText("El número que deseas borrar no está en el árbol.");
+        } // Si existe, entonces verificamos si tiene hijos.
+        
+        
+        // Verificamos si no tiene hijos
+        else if (!(arbol.nodoTieneHijos(nodoActual))) {
+            //Si no tiene hijos, entra aquí y lo borra sin más.
+            lblMensaje.setText("borrado");
+
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     /**

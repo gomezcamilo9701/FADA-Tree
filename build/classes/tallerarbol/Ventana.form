@@ -246,9 +246,6 @@
       </Events>
     </Component>
     <Component class="java.awt.Label" name="lblMensaje">
-      <AccessibilityProperties>
-        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
-      </AccessibilityProperties>
     </Component>
   </SubComponents>
 </Form>
