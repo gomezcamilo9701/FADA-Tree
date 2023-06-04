@@ -1,10 +1,9 @@
-
 package tallerarbol;
 
 public class Ventana extends javax.swing.JFrame {
 
     Arbol arbol;
-    
+
     /**
      * Creates new form Ventana
      */
@@ -38,6 +37,7 @@ public class Ventana extends javax.swing.JFrame {
         tablero = new tallerarbol.Tablero();
         btnLimpiar = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        lblMensaje = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Practica 1. Árboles Binarios");
@@ -113,10 +113,6 @@ public class Ventana extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(395, 395, 395))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tablero, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,13 +144,18 @@ public class Ventana extends javax.swing.JFrame {
                                                     .addComponent(btnInsertar)
                                                     .addComponent(btnBorrar))))
                                         .addGap(53, 53, 53))
-                                    .addComponent(outRecorrido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(outRecorrido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblMensaje, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(121, 121, 121)
                                 .addComponent(jButton7)
                                 .addGap(33, 33, 33)
                                 .addComponent(btnLimpiar)))))
                 .addGap(0, 48, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,59 +193,70 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton8)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tablero, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
+
+        tablero.getAccessibleContext().setAccessibleName("");
+        lblMensaje.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnOrdenActionPerformed
-               
+
         outRecorrido.setText(arbol.EnOrden());
-        
+
     }//GEN-LAST:event_btnEnOrdenActionPerformed
 
     private void btnMostrarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarArbolActionPerformed
-        
+
         arbol = new Arbol();
 
         String entrada = inLista.getText();
         String[] datos = entrada.split(",");
-        
+
         for (int i = 0; i < datos.length; i++) {
             arbol.insertar(Integer.parseInt(datos[i]));
-        }       
-        
-       // arbol.dibujar(tablero.getGraphics());
+        }
+
+        // arbol.dibujar(tablero.getGraphics());
         tablero.setArbol(arbol);
         tablero.repaint();
-        
+
     }//GEN-LAST:event_btnMostrarArbolActionPerformed
-        
+
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-                
+
         arbol = null; // vaciar el arbol es volverlo null
         tablero.setArbol(arbol);
         tablero.repaint();
-        
+
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-                
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-       //Con esto insertar el número en el arbol y lo re imprime con repaint.
-       String input = inputInsertar.getText();
-       int numero = Integer.parseInt(input);
-       arbol.insertar(numero);
-       tablero.repaint();
+        //Con esto insertar el número en el arbol y lo re imprime con repaint.
+        String input = inputInsertar.getText();
+        int numero = Integer.parseInt(input);
+
+        if (arbol.contiene(numero)) {
+            lblMensaje.setText("El número ya existe en el árbol, ingresa uno diferente");
+        } else {
+            arbol.insertar(numero);
+            tablero.repaint();
+            lblMensaje.setText("");
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
@@ -302,6 +314,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private java.awt.Label lblMensaje;
     private javax.swing.JTextField outRecorrido;
     private tallerarbol.Tablero tablero;
     // End of variables declaration//GEN-END:variables

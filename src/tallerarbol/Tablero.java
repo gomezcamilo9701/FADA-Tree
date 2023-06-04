@@ -1,4 +1,3 @@
-
 package tallerarbol;
 
 import java.awt.Canvas;
@@ -11,15 +10,14 @@ public class Tablero extends Canvas {
     public void setArbol(Arbol arbol) {
         this.arbol = arbol;
     }
-    
+
     @Override
-    public void paint(Graphics g)
-    {
+    public void paint(Graphics g) {
         setBackground(Color.white);
-        
+
         if (arbol != null) {
             arbol.dibujar(g);
         }
-        
+
     }
 }
