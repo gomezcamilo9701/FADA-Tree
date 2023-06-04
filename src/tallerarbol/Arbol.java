@@ -104,22 +104,17 @@ public class Arbol {
 
         // comienza con el nodo raíz
         Nodo curr = root;
-        System.out.println("1");
 
         // busca la clave en el BST y establece su puntero principal
         while (curr != null && curr.getInfo() != key) {
-            System.out.println("curr " + curr.getInfo() + " key " + key);
             // actualiza el padre al nodo actual
-            System.out.println("2");
             parent = curr;
 
             // si la clave dada es menor que el nodo actual, vaya al subárbol izquierdo;
             // de lo contrario, vaya al subárbol derecho
             if (key < curr.getInfo()) {
-            System.out.println("2.1");                
                 curr = curr.izq;
             } else {
-                System.out.println("2.2");
                 curr = curr.der;
             }
         }
@@ -131,21 +126,16 @@ public class Arbol {
 
         // Caso 1: el nodo a eliminar no tiene hijos, es decir, es un nodo hoja
         if (curr.izq == null && curr.der == null) {
-            System.out.println("3");
             // si el nodo a eliminar no es un nodo raíz, establezca su
             // padre izquierdo/derecho hijo a nulo
             if (curr != root) {
-                System.out.println("4");
                 if (parent.izq == curr) {
-                    System.out.println("5");
                     parent.izq = null;
                 } else {
-                    System.out.println("6");
                     parent.der = null;
                 }
             } // si el árbol solo tiene un nodo raíz, configúrelo como nulo
             else {
-                System.out.println("7");
                 root = null;
             }
         } // Caso 2: el nodo a eliminar tiene dos hijos
