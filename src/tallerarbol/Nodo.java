@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.util.Queue;
 
 public class Nodo {
-    private int info;  // key
+    protected int info;  // key
         
     Nodo izq, der; // children
     
@@ -27,6 +27,10 @@ public class Nodo {
 
     public int getInfo() {
         return info;
+    }
+    
+    public void setInfo(int newInfo){
+        this.info = newInfo;
     }
     
     public int altura()

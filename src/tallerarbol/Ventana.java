@@ -273,6 +273,11 @@ public class Ventana extends javax.swing.JFrame {
         // Verificamos si no tiene hijos
         else if (!(arbol.nodoTieneHijos(nodoActual))) {
             //Si no tiene hijos, entra aquí y lo borra sin más.
+            
+            Arbol newArbol = new Arbol();
+            
+            arbol.deleteNode(arbol.raiz, numero);
+            tablero.repaint();
             lblMensaje.setText("borrado");
 
         }

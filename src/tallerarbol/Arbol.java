@@ -6,7 +6,7 @@ import java.util.Queue;
 
 public class Arbol {
 
-    private Nodo raiz;
+    public Nodo raiz;
 
     public void insertar(int n) {
         if (raiz == null) {
@@ -41,6 +41,7 @@ public class Arbol {
             raiz.dibujarNodo(dibujo, 0, 0);
         }
     }
+    
 
     //Método que para el contiene, verificar si el numero está en el array.
     public boolean contiene(int numero) {
@@ -90,11 +91,63 @@ public class Arbol {
         return nodo.verificarHijos(nodo);
     }
 
-    public void borrarNodo(int numeroABorrar) {
+    public Nodo deleteNode(Nodo raiz,int k) {
+
+        // Base case
         if (raiz == null) {
-            raiz = new Nodo(n);
-        } else {
-            raiz.insertar(new Nodo(n));
+            return raiz;
+        }
+
+        // Recursive calls for ancestors of
+        // node to be deleted
+        if (raiz.getInfo() > k) {
+            System.out.println("key:" + raiz.getInfo());
+            raiz.izq = deleteNode(raiz.izq, k);
+            return raiz;
+        } else if (raiz.getInfo() < k) {
+            raiz.der = deleteNode(raiz.der, k);
+            return raiz;
+        }
+
+        // We reach here when root is the node
+        // to be deleted.
+        // If one of the children is empty
+        if (raiz.izq == null) {
+            System.out.println("pasa aqui 2");
+            Nodo temp = raiz.der;
+            System.out.println("nodetemp");
+            return temp;
+        } else if (raiz.der == null) {
+            Nodo temp = raiz.izq;
+            return temp;
+        } // If both children exist
+        else {
+            Nodo succParent = raiz;
+
+            // Find successor
+            Nodo succ = raiz.der;
+
+            while (succ.izq != null) {
+                succParent = succ;
+                succ = succ.izq;
+            }
+
+            // Delete successor. Since successor
+            // is always left child of its parent
+            // we can safely make successor's right
+            // right child as left of its parent.
+            // If there is no succ, then assign
+            // succ->right to succParent->right
+            if (succParent != raiz) {
+                succParent.izq = succ.der;
+            } else {
+                succParent.der = succ.der;
+            }
+
+            // Copy Successor Data to root
+            raiz.setInfo(succ.getInfo());
+
+            return raiz;
         }
     }
 }
